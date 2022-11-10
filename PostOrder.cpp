@@ -18,6 +18,8 @@ public:
 };
 
 //iterative
+
+//2 stacks-> preorder (root,l,r)->reverse(root,r,l)
 class Solution {
 public:
 
@@ -42,6 +44,41 @@ public:
         while(!st2.empty()){
             ans.push_back(st2.top()->val);
             st2.pop();
+        }
+        return ans;
+    }
+};
+
+//1 stack and curr pointer
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(!root){
+            return ans;
+        }
+        stack<TreeNode*> stk;
+        TreeNode* temp=root;
+        while(temp!=NULL || !stk.empty()){
+            if(temp){
+                stk.push(temp);
+                temp=temp->left;
+            }else{
+                assert(!stk.empty());
+                TreeNode* justRight=stk.top()->right;
+                if(justRight){
+                    temp=justRight;
+                }else{
+                    justRight=stk.top();
+                    stk.pop();
+                    ans.push_back(justRight->val);
+                    while(!stk.empty() && justRight==stk.top()->right){
+                        justRight=stk.top();
+                        stk.pop();
+                        ans.push_back(justRight->val);
+                    }
+                }
+            }
         }
         return ans;
     }
