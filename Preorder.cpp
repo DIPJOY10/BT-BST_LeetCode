@@ -15,3 +15,27 @@ public:
         return ans;
     }
 };
+
+//iterative version using stack
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(!root){
+            return ans;
+        }
+        //iterative
+        stack<TreeNode*> stk;
+        stk.push(root);
+        while(!stk.empty()){
+            auto it=stk.top();
+            stk.pop();
+            ans.push_back(it->val);
+            if(it->right)
+            stk.push(it->right);
+            if(it->left)
+            stk.push(it->left);
+        }
+        return ans;
+    }
+};
