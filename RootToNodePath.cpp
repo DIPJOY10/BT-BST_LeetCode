@@ -1,25 +1,22 @@
 //https://www.interviewbit.com/problems/path-to-given-node/
 
-void helper(TreeNode* A,int B,vector<int>& ans,bool& found){
+bool helper(TreeNode* A,int B,vector<int>& ans){
     if(!A){
-        return;
+        return false;
     }
-    if(!found){
-        ans.push_back(A->val);
-        if(B==A->val){
-            found=true;
-        }   
+    ans.push_back(A->val);
+    if(A->val==B){
+        return true;
     }
-    helper(A->left,B,ans,found);
-    helper(A->right,B,ans,found);
-    if(!found){
-        ans.pop_back();
+    if(helper(A->left,B,ans) || helper(A->right,B,ans){
+        return true;
     }
+    ans.pop_back();
+    return false;
 } 
  
 vector<int> Solution::solve(TreeNode* A, int B) {
     vector<int> ans;
-    bool found=false;
-    helper(A,B,ans,found);
+    helper(A,B,ans);
     return ans;
 }
